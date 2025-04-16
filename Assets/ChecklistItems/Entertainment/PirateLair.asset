@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PirateLair
   m_EditorClassIdentifier: 
   _name: Pirate's Lair on Tom Sawyer Island
-  _activityType: 1
+  _activityType: 4
   _location: 1
   _url: https://disneyland.disney.go.com/attractions/disneyland/pirates-lair-on-tom-sawyer-island/
