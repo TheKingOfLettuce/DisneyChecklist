@@ -10,11 +10,17 @@ public class ItemManager : MonoBehaviour, ISaveable {
     private Transform _itemParent;
     [SerializeField]
     private Item _itemPrefab;
+    [SerializeField]
+    private IconManager _icons;
+    [SerializeField]
+    private ProgressBar _progress;
 
     private Dictionary<string, ItemData> _itemMap;
     private Dictionary<Activities, HashSet<ItemData>> _activityFilter;
     private Dictionary<Locations, HashSet<ItemData>> _locationFilter;
     private Dictionary<string, Item> _items;
+
+    private List<Item> _currentList;
 
     public string SaveID => "ItemManager";
 
@@ -70,14 +76,42 @@ public class ItemManager : MonoBehaviour, ISaveable {
         }
 
         BuildItems();
+        _progress.SetTotal(_items.Count);
     }
 
     private void BuildItems() {
         _items = new Dictionary<string, Item>();
+        _currentList = new List<Item>();
         foreach(ItemData data in _itemMap.Values) {
             Item itemInstance = Instantiate(_itemPrefab, _itemParent);
-            itemInstance.SetItemData(data);
+            itemInstance.SetItemData(data, _icons);
             _items.Add(data.Name, itemInstance);
+            _currentList.Add(itemInstance);
+        }
+    }
+
+    public void ToggleFinished(bool showFinished) {
+        foreach(Item item in _currentList) {
+            if (!item.IsChecked || showFinished)
+                item.gameObject.SetActive(true);
+        }
+    }
+
+    public void FilterItems(HashSet<Locations> locationFilter, HashSet<Activities> activityFilter) {
+        foreach(Item item in _currentList) {
+            item.gameObject.SetActive(false);
+        }
+        _currentList.Clear();
+        foreach(Item item in _items.Values) {
+            if (!locationFilter.Contains(item.Data.Location)) {
+                continue;
+            }
+            if (!activityFilter.Contains(item.Data.ActivityType)) {
+                continue;
+            }
+
+            _currentList.Add(item);
+            item.gameObject.SetActive(true);
         }
     }
 }

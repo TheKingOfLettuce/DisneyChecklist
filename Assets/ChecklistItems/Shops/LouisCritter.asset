@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LouisCritter
   m_EditorClassIdentifier: 
   _name: Louis' Critter Club
-  _activityType: 1
+  _activityType: 2
   _location: 1
   _url: https://disneyland.disney.go.com/shops/disneyland/louis-critter-club/

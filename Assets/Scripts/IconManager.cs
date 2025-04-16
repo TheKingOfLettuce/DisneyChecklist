@@ -4,71 +4,47 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class IconManager : MonoBehaviour {
-    private static IconManager _instance;
+    [SerializeField]
+    private Color _disneyColor;
+    [SerializeField]
+    private Color _californiaColor;
+    [SerializeField]
+    private Color _downtownColor;
+    [SerializeField]
+    private Sprite _rideIcon;
+    [SerializeField]
+    private Sprite _shopIcon;
+    [SerializeField]
+    private Sprite _foodIcon;
+    [SerializeField]
+    private Sprite _entertainmentIcon;
 
-    [SerializeField]
-    private Sprite _disneyIcon;
-    [SerializeField]
-    private Sprite _californiaIcon;
-    [SerializeField]
-    private Sprite _downtownIcon;
-    [SerializeField]
-    private Color _rideColor;
-    [SerializeField]
-    private Color _shopColor;
-    [SerializeField]
-    private Color _foodColor;
-    [SerializeField]
-    private Color _entertainmentColor;
 
-    private void Awake() {
-        if (_instance != null) {
-            Debug.LogError("Cant have more than 1 icon manager");
-            Destroy(this);
-        }
-
-        _instance = this;
-    }
-
-    private void OnDestroy() {
-        if (_instance == this) {
-            _instance = null;
-        }
-    }
-
-    public static Sprite GetLocationIcon(Locations location) {
-        if (_instance == null) {
-            return null;
-        }
-
+    public Color GetLocationColor(Locations location) {
         switch (location) {
             case Locations.DISNEY_LAND:
-                return _instance._disneyIcon;
+                return _disneyColor;
             case Locations.CALIFORNIA_ADVENTURE:
-                return _instance._californiaIcon;
+                return _californiaColor;
             case Locations.DOWNTOWN_DISNEY:
-                return _instance._downtownIcon;
-        }
-
-        return null;
-    }
-
-    public static Color GetActivityColor(Activities activity) {
-        if (_instance == null) {
-            return Color.grey;
-        }
-
-        switch (activity) {
-            case Activities.RIDE:
-                return _instance._rideColor;
-            case Activities.SHOP:
-                return _instance._shopColor;
-            case Activities.FOOD:
-                return _instance._foodColor;
-            case Activities.ENTERTAINMENT:
-                return _instance._entertainmentColor;
+                return _downtownColor;
         }
 
         return Color.gray;
+    }
+
+    public Sprite GetActivityIcon(Activities activity) {
+        switch (activity) {
+            case Activities.RIDE:
+                return _rideIcon;
+            case Activities.SHOP:
+                return _shopIcon;
+            case Activities.FOOD:
+                return _foodIcon;
+            case Activities.ENTERTAINMENT:
+                return _entertainmentIcon;
+        }
+
+        return null;
     }
 }

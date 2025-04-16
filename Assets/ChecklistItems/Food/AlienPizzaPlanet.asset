@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6e7b570855395418d464993e24e7fd, type: 3}
   m_Name: AlienPizzaPlanet
   m_EditorClassIdentifier: 
-  _name: https://disneyland.disney.go.com/dining/disneyland/alien-pizza-planet/
+  _name: Alien Pizza Planet
   _activityType: 3
   _location: 1
   _url: https://disneyland.disney.go.com/dining/disneyland/alien-pizza-planet/
