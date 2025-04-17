@@ -2,10 +2,10 @@ const cacheName = 'disney-checklist-cache-v2';
 const filesToCache = [
   './',
   './index.html',
-  './Build/DisneyChecklist.loader.js',
-  './Build/DisneyChecklist.framework.js',
-  './Build/DisneyChecklist.wasm',
-  './Build/DisneyChecklist.data',
+  './Build/docs.loader.js',
+  './Build/docs.framework.js',
+  './Build/docs.wasm',
+  './Build/docs.data',
   './img/D180.png',
   './img/512.png',
 ];
