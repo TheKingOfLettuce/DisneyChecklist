@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ItemManagerSave {
     public List<string> SaveNames;
@@ -22,8 +19,6 @@ public class ItemManager : MonoBehaviour, ISaveable {
     private IconManager _icons;
     [SerializeField]
     private ProgressBar _progress;
-    [SerializeField]
-    private Scrollbar _scrollbar;
 
     private Dictionary<string, ItemData> _itemMap;
     private Dictionary<Activities, HashSet<ItemData>> _activityFilter;
@@ -139,9 +134,5 @@ public class ItemManager : MonoBehaviour, ISaveable {
             if (_showFinished || !item.IsChecked)
                 item.gameObject.SetActive(true);
         }
-    }
-
-    public static void ToggleScrollbar(bool flag) {
-        Instance._scrollbar.interactable = flag;
     }
 }

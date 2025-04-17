@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ProgressBar : MonoBehaviour {

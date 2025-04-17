@@ -25,65 +25,58 @@ public class FilterHelper : MonoBehaviour {
     }
 
     public void OnRideChanged(bool flag) {
-        if (flag)
-            _activityFilter.Add(Activities.RIDE);
-        else
-            _activityFilter.Remove(Activities.RIDE);
+        DeltaActivity(Activities.RIDE, flag);
 
         _manager.FilterItems(_locationFilter, _activityFilter);
     }
 
     public void OnShopChanged(bool flag) {
-        if (flag)
-            _activityFilter.Add(Activities.SHOP);
-        else
-            _activityFilter.Remove(Activities.SHOP);
+        DeltaActivity(Activities.SHOP, flag);
 
         _manager.FilterItems(_locationFilter, _activityFilter);
     }
 
     public void OnFoodChanged(bool flag) {
-        if (flag)
-            _activityFilter.Add(Activities.FOOD);
-        else
-            _activityFilter.Remove(Activities.FOOD);
+        DeltaActivity(Activities.FOOD, flag);
 
         _manager.FilterItems(_locationFilter, _activityFilter);
     }
 
     public void OnEntertainmentChanged(bool flag) {
-        if (flag)
-            _activityFilter.Add(Activities.ENTERTAINMENT);
-        else
-            _activityFilter.Remove(Activities.ENTERTAINMENT);
+        DeltaActivity(Activities.ENTERTAINMENT, flag);
 
         _manager.FilterItems(_locationFilter, _activityFilter);
     }
 
     public void OnDisneylandChanged(bool flag) {
-        if (flag)
-            _locationFilter.Add(Locations.DISNEY_LAND);
-        else
-            _locationFilter.Remove(Locations.DISNEY_LAND);
+        DeltaLocation(Locations.DISNEY_LAND, flag);
 
         _manager.FilterItems(_locationFilter, _activityFilter);
     }
 
     public void OnCaliforniaChanged(bool flag) {
-        if (flag)
-            _locationFilter.Add(Locations.CALIFORNIA_ADVENTURE);
-        else
-            _locationFilter.Remove(Locations.CALIFORNIA_ADVENTURE);
+        DeltaLocation(Locations.CALIFORNIA_ADVENTURE, flag);
 
         _manager.FilterItems(_locationFilter, _activityFilter);
     }
 
     public void OnDowntownChanged(bool flag) {
-        if (flag)
-            _locationFilter.Add(Locations.DOWNTOWN_DISNEY);
-        else
-            _locationFilter.Remove(Locations.DOWNTOWN_DISNEY);
+        DeltaLocation(Locations.DOWNTOWN_DISNEY, flag);
 
         _manager.FilterItems(_locationFilter, _activityFilter);
+    }
+
+    private void DeltaLocation(Locations location, bool flag) {
+        if (flag)
+            _locationFilter.Add(location);
+        else
+            _locationFilter.Remove(location);
+    }
+
+    private void DeltaActivity(Activities activity, bool flag) {
+        if (flag)
+            _activityFilter.Add(activity);
+        else
+            _activityFilter.Remove(activity);
     }
 }

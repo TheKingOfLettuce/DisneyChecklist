@@ -146,8 +146,11 @@ public class SaveManager : MonoBehaviour {
 
     public void ResetGame() {
         Debug.Log("Reseting game");
-        //PlayerPrefs.DeleteAll();
+        #if UNITY_WEBGL
+        SaveToLocalStorage(SaveKey, "{}");
+        #else
         File.Delete(_filePath);
+        #endif
         Debug.Log("Reloading scene");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
