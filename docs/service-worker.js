@@ -1,4 +1,4 @@
-const cacheName = 'disney-checklist-cache-v1';
+const cacheName = 'disney-checklist-cache-v2';
 const filesToCache = [
   './',
   './index.html',
@@ -18,7 +18,15 @@ self.addEventListener("install", function (e) {
 });
 
 self.addEventListener("activate", function (e) {
-  console.log("Service worker activated.");
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.map(key => {
+          if (key !== cacheName) return caches.delete(key);
+        })
+      )
+    )
+  );
 });
 
 self.addEventListener("fetch", function (e) {
