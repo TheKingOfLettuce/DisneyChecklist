@@ -3,11 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="manifest" href="manifest.json" />
     <title>Unity WebGL Player | DisneyChecklist</title>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=900 height=1950 tabindex="-1" style="width: 900px; height: 1950px; background: #231F20"></canvas>
     <script src="Build/DisneyChecklist.loader.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log("Service worker registered"))
+          .catch(err => console.error("Service worker failed:", err));
+      }
+    </script>
     <script>
       if (navigator.storage && navigator.storage.persist) {
         navigator.storage.persist().then(granted => {
