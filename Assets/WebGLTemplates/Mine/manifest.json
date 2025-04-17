@@ -1,0 +1,20 @@
+{
+    "name": "Disney Checklist",
+    "short_name": "Checklist",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#000000",
+    "theme_color": "#1e90ff",
+    "icons": [
+      {
+        "src": "img/D180.png",
+        "sizes": "180x180",
+        "type": "image/png"
+      },
+      {
+        "src": "img/D512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
