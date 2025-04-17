@@ -2,8 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+public class ItemManagerSave {
+    public List<string> SaveNames;
+    public List<ItemSave> SaveData;
+}
 
 public class ItemManager : MonoBehaviour, ISaveable {
+    public static bool ShowFinished => Instance._showFinished;
+
     [SerializeField]
     private List<ItemData> _allItems;
     [SerializeField]
@@ -14,6 +22,8 @@ public class ItemManager : MonoBehaviour, ISaveable {
     private IconManager _icons;
     [SerializeField]
     private ProgressBar _progress;
+    [SerializeField]
+    private Scrollbar _scrollbar;
 
     private Dictionary<string, ItemData> _itemMap;
     private Dictionary<Activities, HashSet<ItemData>> _activityFilter;
@@ -21,17 +31,23 @@ public class ItemManager : MonoBehaviour, ISaveable {
     private Dictionary<string, Item> _items;
 
     private List<Item> _currentList;
+    private static ItemManager Instance;
+    private bool _showFinished = true;
 
     public string SaveID => "ItemManager";
 
     public string GetSave() {
-        Dictionary<string, ItemSave> save = new Dictionary<string, ItemSave>();
+        List<string> saveNames = new List<string>();
+        List<ItemSave> saveData = new List<ItemSave>();
+
         foreach(Item item in _items.Values) {
             ItemSave itemSave = new ItemSave();
             itemSave.IsChecked = item.IsChecked;
+            saveNames.Add(item.Data.Name);
+            saveData.Add(itemSave);
         }
 
-        return JsonUtility.ToJson(save);
+        return JsonUtility.ToJson(new ItemManagerSave{SaveNames=saveNames, SaveData=saveData});
     }
 
     public void LoadDefault() {
@@ -42,13 +58,13 @@ public class ItemManager : MonoBehaviour, ISaveable {
     }
 
     public void LoadSave(string saveData) {
-        Dictionary<string, ItemSave> mainSave = JsonUtility.FromJson<Dictionary<string, ItemSave>>(saveData);
-        foreach(string saveName in mainSave.Keys) {
-            if (!_items.ContainsKey(saveName)) {
+        ItemManagerSave mainSave = JsonUtility.FromJson<ItemManagerSave>(saveData);
+        for (int i = 0; i < mainSave.SaveNames.Count; i++) {
+            if (!_items.ContainsKey(mainSave.SaveNames[i])) {
                 continue;
             }
 
-            _items[saveName].SetSaveData(mainSave[saveName]);
+            _items[mainSave.SaveNames[i]].SetSaveData(mainSave.SaveData[i]);
         }
     }
 
@@ -77,6 +93,7 @@ public class ItemManager : MonoBehaviour, ISaveable {
 
         BuildItems();
         _progress.SetTotal(_items.Count);
+        Instance = this;
     }
 
     private void BuildItems() {
@@ -91,9 +108,17 @@ public class ItemManager : MonoBehaviour, ISaveable {
     }
 
     public void ToggleFinished(bool showFinished) {
+        if (_showFinished == showFinished)
+            return;
+
+        _showFinished = showFinished;
         foreach(Item item in _currentList) {
-            if (!item.IsChecked || showFinished)
+            if (item.IsChecked && !showFinished) {
+                item.gameObject.SetActive(false);  
+            }
+            else {
                 item.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -111,7 +136,12 @@ public class ItemManager : MonoBehaviour, ISaveable {
             }
 
             _currentList.Add(item);
-            item.gameObject.SetActive(true);
+            if (_showFinished || !item.IsChecked)
+                item.gameObject.SetActive(true);
         }
+    }
+
+    public static void ToggleScrollbar(bool flag) {
+        Instance._scrollbar.interactable = flag;
     }
 }

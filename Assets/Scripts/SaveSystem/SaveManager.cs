@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using System.Runtime.InteropServices;
 
 public class SaveManager : MonoBehaviour {
     public static event Action OnLoadFinished;
@@ -10,7 +11,12 @@ public class SaveManager : MonoBehaviour {
 
     #if UNITY_WEBGL
         [DllImport("__Internal")]
-        private static extern void JS_FileSystem_Sync();
+        private static extern void SaveToLocalStorage(string key, string value);
+
+        [DllImport("__Internal")]
+        private static extern IntPtr LoadFromLocalStorage(string key);
+
+        private const string SaveKey = "DisneyChecklistSave";
     #endif
 
     [Header("Save Settings")]
@@ -23,15 +29,13 @@ public class SaveManager : MonoBehaviour {
 
     private void Awake() {
         Instance = this;
+        #if !UNITY_WEBGL
         _filePath = FilePath();
+        #endif
         FetchAllSaveables();
     }
 
     private void Start() {
-        #if UNITY_WEBGL
-            WebStart();
-        #endif 
-
         SaveDataWrapper data = LoadFromLocalFile();
         
         if (data == null) {
@@ -46,20 +50,26 @@ public class SaveManager : MonoBehaviour {
         OnLoadFinished?.Invoke();
     }
 
-    private void WebStart() {
-        Debug.Log("Init game for web");
-        if (!Directory.Exists("idbfs/BoinkSaves"))
-            Directory.CreateDirectory("idbfs/BoinkSaves");
-    }
-
     private SaveDataWrapper LoadFromLocalFile() {
         Debug.Log("Loading game, looking for local save file");
+        SaveDataWrapper data;
+        #if UNITY_WEBGL
+        IntPtr ptr = LoadFromLocalStorage(SaveKey);
+        if (ptr == IntPtr.Zero) {
+            return null;
+        }
+        string json = Marshal.PtrToStringUTF8(ptr);
+        Marshal.FreeHGlobal(ptr);
+        data = JsonUtility.FromJson<SaveDataWrapper>(json);
+        #else
         Debug.Log($"Looking for file at {_filePath}");
         if (!File.Exists(_filePath)) {
             return null;
         }
 
-        SaveDataWrapper data = JsonUtility.FromJson<SaveDataWrapper>(File.ReadAllText(_filePath));
+        data = JsonUtility.FromJson<SaveDataWrapper>(File.ReadAllText(_filePath));
+        #endif
+        
         return data;
     }
 
@@ -86,12 +96,14 @@ public class SaveManager : MonoBehaviour {
         SaveDataWrapper finalSave = new SaveDataWrapper {SaveData = saveData};
         Debug.Log("Writing save data to json file");
         string dataString = JsonUtility.ToJson(finalSave);
+        #if UNITY_WEBGL
+        SaveToLocalStorage(SaveKey, dataString);
+        #else
         File.WriteAllText(_filePath, dataString);
         Debug.Log($"Save data written to {_filePath}");
-        Debug.Log("Saving game complete");
-        #if UNITY_WEBGL
-            JS_FileSystem_Sync();
         #endif
+        
+        Debug.Log("Saving game complete");
     }
 
     public void LoadGame(SaveDataWrapper fileData) {
@@ -117,11 +129,7 @@ public class SaveManager : MonoBehaviour {
     }
 
     private string FilePath() {
-        #if UNITY_WEBGL 
-            return "idbfs/BoinkSaves" + $"/{_jsonFileName}";
-        #else
-            return Application.persistentDataPath + $"\\{_jsonFileName}";
-        #endif
+        return Application.persistentDataPath + $"\\{_jsonFileName}";
     }
 
     private void LoadDefaults() {

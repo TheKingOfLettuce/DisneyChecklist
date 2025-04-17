@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ProgressBar : MonoBehaviour {
@@ -26,14 +27,15 @@ public class ProgressBar : MonoBehaviour {
     }
 
     public static void DeltaCount(int delta) {
-        _instance._count -= delta;
+        _instance._count += delta;
+        _instance.UpdateProgress();
     }
 
     private void UpdateProgress() {
-        float ratio = _count / _total;
-        _text.text = ratio.ToString("0.00") + " %";
+        float ratio = (float)_count / _total;
+        _text.text = ratio.ToString("P");
         float width = _progressBar.rect.width;
         float moveAmount = Mathf.Lerp(-width, width, ratio);
-        _progressBar.transform.position = Vector3.zero + Vector3.right * moveAmount;
+        _progressBar.anchoredPosition = Vector3.zero + Vector3.right * moveAmount;
     }
 }
