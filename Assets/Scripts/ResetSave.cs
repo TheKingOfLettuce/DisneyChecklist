@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 public class ResetSave : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
     [SerializeField]
     private float _holdTime;
+    [SerializeField]
+    private GameObject _confirmWindow;
 
     private IEnumerator _holdRoutine;
 
@@ -28,7 +30,7 @@ public class ResetSave : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
 
     private IEnumerator HoldRoutine() {
         yield return new WaitForSeconds(_holdTime);
-        SaveManager.Instance.ResetGame();
+        _confirmWindow.SetActive(true);
         _holdRoutine = null;
     }
 }

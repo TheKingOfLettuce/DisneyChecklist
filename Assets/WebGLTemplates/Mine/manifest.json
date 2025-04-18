@@ -3,8 +3,8 @@
     "short_name": "Disney Checklist",
     "start_url": "./index.html",
     "display": "standalone",
-    "background_color": "#000000",
-    "theme_color": "#1e90ff",
+    "background_color": "#49006F",
+    "theme_color": "#49006F",
     "icons": [
       {
         "src": "img/D180.png",

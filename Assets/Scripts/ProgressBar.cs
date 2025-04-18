@@ -31,7 +31,7 @@ public class ProgressBar : MonoBehaviour {
         float ratio = (float)_count / _total;
         _text.text = ratio.ToString("P");
         float width = _progressBar.rect.width;
-        float moveAmount = Mathf.Lerp(-width, width, ratio);
+        float moveAmount = Mathf.Lerp(-width, 0, ratio);
         _progressBar.anchoredPosition = Vector3.zero + Vector3.right * moveAmount;
     }
 }

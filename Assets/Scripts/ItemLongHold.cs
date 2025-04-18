@@ -8,28 +8,16 @@ public class ItemLongHold : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     [SerializeField]
     private float _holdTime;
 
-    private IEnumerator _holdRoutine;
-
     public void OnPointerDown(PointerEventData eventData) {
-        if (_holdRoutine != null) {
-            StopCoroutine(_holdRoutine);
-        }
-
-        _holdRoutine = HoldRoutine();
-        StartCoroutine(_holdRoutine);
+        CancelInvoke(nameof(OpenLink));
+        Invoke(nameof(OpenLink), _holdTime);
     }
 
     public void OnPointerUp(PointerEventData eventData) {
-        if (_holdRoutine != null) {
-            StopCoroutine(_holdRoutine);
-        }
-
-        _holdRoutine = null;
+        CancelInvoke(nameof(OpenLink));
     }
 
-    private IEnumerator HoldRoutine() {
-        yield return new WaitForSeconds(_holdTime);
+    private void OpenLink() {
         _item.OpenLink();
-        _holdRoutine = null;
     }
 }
