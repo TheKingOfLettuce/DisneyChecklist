@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _item: {fileID: 7315519898066105189}
-  _holdTime: 1
+  _holdTime: 0.5
 --- !u!1 &2433832823763335152
 GameObject:
   m_ObjectHideFlags: 0
