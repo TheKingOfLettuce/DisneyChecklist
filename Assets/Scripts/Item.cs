@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Runtime.InteropServices;
 
 [Serializable]
 public class ItemSave {
@@ -27,8 +28,9 @@ public class Item : MonoBehaviour {
 
     private bool _isChecked;
     private ItemData _item;
-    private Vector3 _originalDragPos;
-    private bool _didCheckSwipe;
+
+    [DllImport("__Internal")]
+	private static extern void OpenLink(string url);
 
     public void SetItemData(ItemData data, IconManager icons) {
         _item = data;
@@ -62,6 +64,6 @@ public class Item : MonoBehaviour {
             return;
         }
 
-        Application.OpenURL(_item.URL);
+        OpenLink(_item.URL);
     }
 }
