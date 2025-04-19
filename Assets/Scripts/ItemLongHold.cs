@@ -8,16 +8,15 @@ public class ItemLongHold : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     [SerializeField]
     private float _holdTime;
 
+    private float _initalHoldTime;
+
     public void OnPointerDown(PointerEventData eventData) {
-        CancelInvoke(nameof(OpenLink));
-        Invoke(nameof(OpenLink), _holdTime);
+        _initalHoldTime = Time.time;
     }
 
     public void OnPointerUp(PointerEventData eventData) {
-        CancelInvoke(nameof(OpenLink));
-    }
-
-    private void OpenLink() {
-        _item.OpenLink();
+        if ((Time.time - _initalHoldTime) >= _holdTime) {
+            _item.OpenLink();
+        }
     }
 }
