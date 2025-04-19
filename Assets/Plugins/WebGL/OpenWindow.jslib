@@ -1,5 +1,5 @@
 mergeInto(LibraryManager.library, {
-  OpenLink: function (url) {
-    window.open(Pointer_stringify(url));
-  }
+    OpenJSLink: function (url) {
+        window.open(Pointer_stringify(url));
+    }
 });
