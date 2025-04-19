@@ -30,7 +30,7 @@ public class Item : MonoBehaviour {
     private ItemData _item;
 
     [DllImport("__Internal")]
-	private static extern void OpenLink(string url);
+	private static extern void OpenJSLink(string url);
 
     public void SetItemData(ItemData data, IconManager icons) {
         _item = data;
@@ -64,6 +64,6 @@ public class Item : MonoBehaviour {
             return;
         }
 
-        OpenLink(_item.URL);
+        OpenJSLink(_item.URL);
     }
 }
