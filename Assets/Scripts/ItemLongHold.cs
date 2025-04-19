@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,15 +9,15 @@ public class ItemLongHold : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     [SerializeField]
     private float _holdTime;
 
-    private float _initalHoldTime;
+    private float _initialHoldTime;
 
     public void OnPointerDown(PointerEventData eventData) {
-        _initalHoldTime = Time.time;
+        _initialHoldTime = Time.time;
     }
 
     public void OnPointerUp(PointerEventData eventData) {
-        if ((Time.time - _initalHoldTime) >= _holdTime) {
-            _item.OpenLink();
+        if ((Time.time - _initialHoldTime) >= _holdTime) {
+            _item.ToggleChecked(!_item.IsChecked);
         }
     }
 }

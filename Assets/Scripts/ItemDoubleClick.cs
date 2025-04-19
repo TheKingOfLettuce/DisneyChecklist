@@ -11,7 +11,7 @@ public class ItemDoubleClick : MonoBehaviour, IPointerClickHandler {
 
     public void OnPointerClick(PointerEventData eventData) {
         if ((Time.time - _lastTime) <= _doubleClickTime) {
-            _item.ToggleChecked(!_item.IsChecked);
+            _item.OpenLink();
             _lastTime = 0;
             return;
         }

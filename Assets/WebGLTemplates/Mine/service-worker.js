@@ -1,4 +1,4 @@
-const cacheName = 'disney-checklist-cache-v6';
+const cacheName = 'disney-checklist-cache-v7';
 const filesToCache = [
   './',
   './index.html',
