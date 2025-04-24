@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Example Thing
+  m_text: In-Room Dining At Disney's Grand Californian Hotel & Spa
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 318969ae0fe5da54ab5a60c5199c6e0f, type: 2}
   m_sharedMaterial: {fileID: -8374390509467384373, guid: 318969ae0fe5da54ab5a60c5199c6e0f, type: 2}
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.15
+  m_fontSize: 13.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 2, y: 2, z: 7, w: 2}
+  m_margin: {x: 5, y: 2, z: 9, w: 2}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _item: {fileID: 7315519898066105189}
-  _holdTime: 0.5
+  _holdTime: 0.3
 --- !u!1 &2433832823763335152
 GameObject:
   m_ObjectHideFlags: 0
